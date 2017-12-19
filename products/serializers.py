@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 
 class ProductAttributeValueSerializer(serializers.ModelSerializer):
+    attribute = serializers.SlugRelatedField(slug_field='name', read_only=True)
 
     class Meta:
         model = ProductAttributeValue
@@ -12,6 +13,7 @@ class ProductAttributeValueSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     details = ProductAttributeValueSerializer(many=True)
+    category = serializers.SlugRelatedField(slug_field='name', read_only=True)
 
     class Meta:
         model = Product
@@ -46,13 +48,13 @@ class ProductSerializer(serializers.ModelSerializer):
         return product
 
 
-class CatalogCategorySerializer(serializers.ModelSerializer):
+class CatalogCategorySerializer(serializers.HyperlinkedModelSerializer):
     products = serializers.SlugRelatedField(many=True, slug_field='name', read_only=True)
     catalog = serializers.StringRelatedField()
 
     class Meta:
         model = CatalogCategory
-        fields = ('id', 'name', 'parent', 'slug', 'description', 'catalog', 'products')
+        fields = ('url', 'id', 'name', 'parent', 'slug', 'description', 'catalog', 'products')
 
 
 class CatalogSerializer(serializers.ModelSerializer):
