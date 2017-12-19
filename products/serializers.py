@@ -18,6 +18,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ('id', 'name', 'category', 'price', 'quantity', 'details')
+        read_only_fields = ('id',)
 
     def create(self, validated_data):
         attribute_data = validated_data.pop('details')
@@ -55,6 +56,7 @@ class CatalogCategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CatalogCategory
         fields = ('url', 'id', 'name', 'parent', 'slug', 'description', 'catalog', 'products')
+        read_only_fields = ('id',)
 
 
 class CatalogSerializer(serializers.ModelSerializer):
