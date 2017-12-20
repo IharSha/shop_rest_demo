@@ -4,9 +4,9 @@ from rest_framework import serializers
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    details = serializers.SerializerMethodField('show_details')
+    details = serializers.SerializerMethodField()
 
-    def show_details(self, product):
+    def get_details(self, product):
         attributes_value = ProductAttributeValue.objects.filter(product=product)
         details = {}
         for attribute in attributes_value:
