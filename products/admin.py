@@ -4,10 +4,10 @@ from .models import Product, ProductAttribute, ProductAttributeValue, Catalog, C
 
 class ProductAttributeValueInline(admin.TabularInline):
     model = ProductAttributeValue
-    fields = ('attribute', 'value')
+    fields = ('attribute', 'value', 'description')
 
     def get_extra(self, request, obj=None, **kwargs):
-        extra = 0
+        extra = 1
         return extra
 
 

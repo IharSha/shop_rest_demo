@@ -71,7 +71,7 @@ class ProductAttributeValue(models.Model):
     product = models.ForeignKey('Product', related_name='details', on_delete=models.CASCADE)
     attribute = models.ForeignKey('ProductAttribute', on_delete=models.CASCADE)
     value = models.CharField(max_length=500, blank=True, null=True)
-    description = models.TextField(blank=True)
+    description = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
         unique_together = ("product", "attribute")
