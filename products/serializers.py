@@ -20,7 +20,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CatalogCategorySerializer(serializers.ModelSerializer):
-    products = serializers.SlugRelatedField(many=True, slug_field='name', read_only=True)
+    products = ProductSerializer(many=True, read_only=True)
 
     class Meta:
         model = CatalogCategory
