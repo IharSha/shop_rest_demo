@@ -17,7 +17,7 @@ class Product(models.Model):
 
 class Catalog(models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=150)
+    slug = models.SlugField(max_length=150, unique=True)
     description = models.TextField()
     pub_date = models.DateTimeField(default=datetime.now)
 
@@ -34,7 +34,7 @@ class CatalogCategory(models.Model):
     catalog = models.ForeignKey('Catalog', related_name='categories', on_delete=models.CASCADE)
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.SET_NULL)
     name = models.CharField(max_length=300)
-    slug = models.SlugField(max_length=150)
+    slug = models.SlugField(max_length=150, unique=True)
     description = models.TextField(blank=True)
 
     class Meta:

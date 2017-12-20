@@ -3,16 +3,15 @@ from products.models import Product, CatalogCategory, Catalog, ProductAttributeV
 from rest_framework import serializers
 
 
-class ProductAttributeValueSerializer(serializers.ModelSerializer):
-    attribute = serializers.SlugRelatedField(slug_field='name', read_only=True)
-
-    class Meta:
-        model = ProductAttributeValue
-        fields = ('attribute', 'value')
-
-
 class ProductSerializer(serializers.ModelSerializer):
-    details = ProductAttributeValueSerializer(many=True, read_only=True)
+    details = serializers.SerializerMethodField('show_details')
+
+    def show_details(self, product):
+        attributes_value = ProductAttributeValue.objects.filter(product=product)
+        details = {}
+        for attribute in attributes_value:
+            details[attribute.attribute.name] = attribute.value
+        return details
 
     class Meta:
         model = Product
